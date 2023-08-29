@@ -1,0 +1,5 @@
+for i in [2,5,3,4]:
+    print(i)
+
+for c in ["p","d","ww","gg"]:
+    print(c)
