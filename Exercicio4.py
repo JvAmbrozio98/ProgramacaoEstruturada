@@ -1,4 +1,9 @@
 import random
+import json
+import time
+import datetime
+
+start_time = time.time()
 names = [
     "Helena", "Alice", "Laura", "Maria Alice", "Sophia", "Manuela", "Maitê", "Liz", "Cecília", "Isabella", 
     "Luísa", "Eloá", "Heloísa", "Júlia", "Ayla", "Maria Luísa", "Isis", "Elisa", "Antonella", "Valentina", 
@@ -25,8 +30,8 @@ names = [
 
 quantidadeDePessoas = int(input("Digite a quantidade de pessoas que vão ser verificadas "))
 pessoaComMaisDe50,pessoaMenosDe40 = 0,0
-mediaDeAltura = []
-pessoas = []
+mediaDeAltura, pessoas = [], []
+
 for i in range(quantidadeDePessoas):
     pessoa = {
     "nome" : names[random.randint(0,len(names) - 1)],
@@ -43,17 +48,20 @@ for i in range(quantidadeDePessoas):
         pessoaMenosDe40 += 1
     elif(pessoas[i]["idade"] >= 10 and pessoas[i]["idade"] <= 20  ) :
         mediaDeAltura.append(pessoas[i]["altura"])
+with open('pessoas.json', 'w') as json_file:
+    json.dump(pessoas, json_file, indent=4)
 
 
-if (len(mediaDeAltura) != 0) :
-    mediaDeAltura = sum(mediaDeAltura) / len(mediaDeAltura)
-else:
-    mediaDeAltura = 0 
+mediaDeAltura = sum(mediaDeAltura) / len(mediaDeAltura) if len(mediaDeAltura) != 0 else 0
 
 
 print("***************************************************************************")
 print(f'A quanditade de pessoas com mais de 50 anos é : {pessoaComMaisDe50}')
 print(f'A média de altura para pessoas com idade entre 10  e 20: {mediaDeAltura:.2f}')
-print(f'A porcentagems das pessoas com peso inferior é  : {(pessoaMenosDe40 / quantidadeDePessoas) *100 } %')
+print(f'A porcentagems das pessoas com peso inferior é  : {round(((pessoaMenosDe40 / quantidadeDePessoas) *100),2) } %')
 print("***************************************************************************")
+end_time = time.time()
+runtime = start_time - end_time
+runtime_delta = datetime.timedelta(seconds=runtime)
+print(runtime_delta)
 
